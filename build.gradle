@@ -1,0 +1,87 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+apply from: 'common.gradle'
+
+group 'de.klpv.endpoints'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.3.2'
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.1'
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'com.google.cloud.tools.endpoints-framework-server'
+apply plugin: 'com.google.cloud.tools.appengine'
+
+dependencies {
+    compile 'com.google.endpoints:endpoints-framework:2.0.7'
+    compile 'com.google.endpoints:endpoints-framework-guice:2.0.7'
+
+    compile 'com.google.endpoints:endpoints-management-control-appengine:1.0.4'
+    compile 'com.google.endpoints:endpoints-framework-auth:1.0.4'
+
+    compile 'com.google.inject.extensions:guice-servlet:4.1.0'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5'
+}
+
+// this replaces the @appId@ in appengine-web.xml and web.xml
+task replaceProjectId(type: Copy) {
+    from 'src/main/webapp/WEB-INF/'
+    include '*.xml'
+    into "build/exploded-${archivesBaseName}/WEB-INF"
+    filter(ReplaceTokens, tokens: [appId: common.appId])
+}
+assemble.doFirst{tasks.replaceProjectId.execute()}
+
+// this replaces the @clientId@ in index.html
+task replaceClientId(type: Copy) {
+    from 'src/main/webapp/index.html'
+    into "build/exploded-${archivesBaseName}"
+    filter(ReplaceTokens, tokens: [clientId: common.clientId])
+}
+assemble.doFirst{tasks.replaceClientId.execute()}
+
+endpointsServer {
+    // Endpoints Framework Plugin server-side configuration
+    hostname = "api.endpoints.${common.appId}.cloud.goog";
+    serviceClasses = [
+        "de.klpv.api.TestEndpoint"
+    ]
+}
+
+appengine {  // App Engine tasks configuration
+
+    run {
+        port = 8080
+        jvmFlags = [
+                // enable remote debugging in devserver
+                '-Xdebug',
+                '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8001'
+        ]
+    }
+
+    deploy {   // deploy configuration
+        stopPreviousVersion = true
+        promote = true
+        version = "$common.appVersion"
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8

@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>API Test</title>
+    </head>
+    <body>
+        This project is a test-project for  <a href="https://www.kontaktlinsen-preisvergleich.de">Kontaktlinsen-Preisvergleich GmbH</a>
+        <script>
+            function init() {
+                var apisToLoad;
+                var loadCallback = function() {
+                    if (--apisToLoad == 0) {
+                        gapi.client.klpvApi.sayHi({'name' : 'Marco'}).execute(function (resp) {
+                            console.log("function executed : " + resp.message);
+                            alert(resp.message);
+                        });
+                    }
+                };
+
+                var apiRoot = 'https://endpointstest-169017.appspot.com/_ah/api';
+                if (window.location.host.indexOf("localhost")>=0) {
+                    apiRoot = '//' + window.location.host + '/_ah/api';
+                }
+
+                apisToLoad = 1; // must match number of calls to gapi.client.load()
+                gapi.client.load('klpvApi', 'v2', loadCallback, apiRoot);
+            }
+        </script>
+        <script src="https://apis.google.com/js/client.js?onload=init"></script>
+    </body>
+</html>
