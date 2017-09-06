@@ -8,7 +8,7 @@ Build with gradle, especially
 - [appengine-gradle-plugin](https://github.com/GoogleCloudPlatform/app-gradle-plugin)
 - [endpoints-framework-gradle-plugin](https://github.com/GoogleCloudPlatform/endpoints-framework-gradle-plugin)
 
-**The project currently works as expected when deployed [Try here](https://www.google.com), but doesn't work locally.**
+**The project currently works as expected when deployed [Try here](https://endpointstest-169017.appspot.com/), but doesn't work locally.**
 
 ## Setup
 
