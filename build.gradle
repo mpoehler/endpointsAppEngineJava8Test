@@ -27,6 +27,8 @@ apply plugin: 'com.google.cloud.tools.endpoints-framework-server'
 apply plugin: 'com.google.cloud.tools.appengine'
 
 dependencies {
+    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.55'
+
     compile 'com.google.endpoints:endpoints-framework:2.0.8'
     compile 'com.google.endpoints:endpoints-framework-guice:2.0.8'
 
@@ -69,11 +71,11 @@ appengine {  // App Engine tasks configuration
 
     run {
         port = 8080
-        jvmFlags = [
+        //jvmFlags = [
                 // enable remote debugging in devserver
-                '-Xdebug',
-                '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8001'
-        ]
+                //'-Xdebug',
+                //'-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8001'
+        //]
     }
 
     deploy {   // deploy configuration

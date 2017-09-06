@@ -1,7 +1,7 @@
 ext.common = [
         // replace with your clientId
         clientId : '1008259358401-59ck0sdstq9cg2j9ibuhto6fh71kbls6.apps.googleusercontent.com',
-        appEngineVersion : '1.9.54',
+        appEngineVersion : '1.9.55',
         // replace with your appId
         appId : 'endpointstest-169017',
         appVersion : 1
