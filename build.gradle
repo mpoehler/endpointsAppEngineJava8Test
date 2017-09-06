@@ -27,11 +27,11 @@ apply plugin: 'com.google.cloud.tools.endpoints-framework-server'
 apply plugin: 'com.google.cloud.tools.appengine'
 
 dependencies {
-    compile 'com.google.endpoints:endpoints-framework:2.0.7'
-    compile 'com.google.endpoints:endpoints-framework-guice:2.0.7'
+    compile 'com.google.endpoints:endpoints-framework:2.0.8'
+    compile 'com.google.endpoints:endpoints-framework-guice:2.0.8'
 
-    compile 'com.google.endpoints:endpoints-management-control-appengine:1.0.4'
-    compile 'com.google.endpoints:endpoints-framework-auth:1.0.4'
+    compile 'com.google.endpoints:endpoints-management-control-appengine:1.0.5'
+    compile 'com.google.endpoints:endpoints-framework-auth:1.0.5'
 
     compile 'com.google.inject.extensions:guice-servlet:4.1.0'
 }
